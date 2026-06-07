@@ -140,6 +140,38 @@
       opacity: 0.8;
     }
 
+    .hero-status {
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s ease forwards;
+    }
+    .hero-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: rgba(240,236,228,0.85);
+      letter-spacing: 0.03em;
+    }
+    .hero-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #6fcf97;
+      flex-shrink: 0;
+    }
+    .hero-status-dot.before { background: rgba(240,236,228,0.4); }
+    .hero-status-dot.after { background: rgba(240,236,228,0.4); }
+    .hero-status-dot.during { background: #6fcf97; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
     .hero-scroll {
       opacity: 0;
       animation: fadeUp 0.8s 1s ease forwards;
@@ -338,6 +370,20 @@
       font-size: 1.6rem;
       font-weight: 400;
       color: var(--ink);
+    }
+    .chapter-subtitle {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-left: 0.5rem;
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+    .chapter-chinese {
+      font-size: 1.2rem;
+      color: var(--ink-muted);
+      margin-left: 0.4rem;
+      font-style: normal;
+      opacity: 0.6;
     }
 
     .day-list { display: flex; flex-direction: column; gap: 1px; }
@@ -598,6 +644,101 @@
     @media (max-width: 600px) {
       .hotels-grid { grid-template-columns: 1fr; }
     }
+
+    .place-info {
+      max-width: 820px;
+      margin: 0 auto 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--paper-warm);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+    .place-known-for {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
+    }
+    .place-dish {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+    .place-dish strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── KINESISK 101 ── */
+    .chinese-section {
+      padding: 5rem 2rem;
+      background: var(--paper-warm);
+      border-top: 1px solid var(--border);
+    }
+
+    .phrase-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .phrase-card {
+      background: var(--paper-card);
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .phrase-card:hover { background: #fff; }
+
+    .phrase-category {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .phrase-norwegian {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .phrase-pinyin {
+      font-size: 13px;
+      color: var(--accent-blue);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .phrase-chinese {
+      font-size: 1.5rem;
+      color: var(--ink-soft);
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+
+    .phrase-tip {
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .phrase-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -608,6 +749,7 @@
     <li><a href="#rute">Kartvisning</a></li>
     <li><a href="#itinerary">Reiserute</a></li>
     <li><a href="#hoteller">Hoteller</a></li>
+    <li><a href="#kinesisk">Kinesisk 101</a></li>
   </ul>
 </nav>
 
@@ -616,9 +758,8 @@
   <div class="hero-bg"></div>
   <div class="hero-grain"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Sommerreise 2026</p>
     <h1 class="hero-title">Kina</h1>
-    <p class="hero-subtitle">7. juli — 23. juli</p>
+    <p class="hero-subtitle">7. juli — 23. juli 2026</p>
     <div class="hero-route">
       <span class="hero-route-stop highlight">Chongqing</span>
       <span class="hero-route-sep">—</span>
@@ -635,6 +776,12 @@
       <span class="hero-route-stop highlight">Guilin</span>
       <span class="hero-route-sep">—</span>
       <span class="hero-route-stop highlight">Beijing</span>
+    </div>
+    <div class="hero-status">
+      <div class="hero-status-badge">
+        <div class="hero-status-dot" id="status-dot"></div>
+        <span id="status-text">Laster...</span>
+      </div>
     </div>
     <div class="hero-scroll">
       <a href="#rute" class="scroll-btn">
@@ -718,9 +865,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">02</span>
-      <span class="chapter-title">Chongqing</span>
+      <span class="chapter-title">Chongqing<span class="chapter-subtitle">Chóngqìng</span><span class="chapter-chinese">重庆</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/SkylineOfChongqing.jpg?width=1200" alt="Chongqing" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Verdens største megaby, kjent for tåkefylte fjellsider, spektakulær nattarkitektur langs elvebreddene, Hongya Cave og den imponerende monorailstasjonen på Liziba.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Chongqing Hot Pot — en brusende gryte med numbing-krydder fra sichuanpepper, berømt over hele Kina</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -730,7 +882,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Ankomst Chongqing</div>
-          <div class="day-hotel">SEYA Panoramic Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/iseyashi-ye-gao-kong-jiu-dian-jie-fang-bei-lai-fu-shi-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">SEYA Panoramic Hotel</a></div>
         </div>
       </div>
       <div class="day-item">
@@ -741,8 +893,9 @@
         </div>
         <div class="day-body">
           <div class="day-place">Chongqing</div>
-          <div class="day-hotel">SEYA Panoramic Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/iseyashi-ye-gao-kong-jiu-dian-jie-fang-bei-lai-fu-shi-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">SEYA Panoramic Hotel</a></div>
           <div class="day-tags"><span class="tag tag-tour">⊙ Guidet tur</span></div>
+          <div class="day-activity"><a href="https://www.getyourguide.com/chongqing-l959/chongqing-step-into-the-cyberpunk-city-with-local-t1189081/" target="_blank" rel="noopener">Chongqing: Step into the Cyberpunk City with Local ↗</a></div>
         </div>
       </div>
       <div class="day-item">
@@ -753,7 +906,9 @@
         </div>
         <div class="day-body">
           <div class="day-place">Chongqing</div>
-          <div class="day-hotel">SEYA Panoramic Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/iseyashi-ye-gao-kong-jiu-dian-jie-fang-bei-lai-fu-shi-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">SEYA Panoramic Hotel</a></div>
+          <div class="day-tags"><span class="tag tag-tour">⊙ Midlertidig kinesisk førerkort</span></div>
+          <div class="day-activity">Skaffe midlertidig kinesisk førerkort og hente leiebil — roadtrip starter i dag</div>
         </div>
       </div>
     </div>
@@ -763,9 +918,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">03</span>
-      <span class="chapter-title">Wulong</span>
+      <span class="chapter-title">Wulong<span class="chapter-subtitle">Wǔlóng</span><span class="chapter-chinese">武隆</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=1200" alt="Wulong" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Naturparadiset i Chongqings indre fjellverden, kjent for spektakulære karstlandskap, tre naturlige steinbroer (Sanqiao) og Furong Cave.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Wulong-lam — mørt lam tilberedt med lokale urter fra høylandet</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -775,7 +935,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Wulong</div>
-          <div class="day-hotel">Autumn Whisper Eden Villas</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/autumn-whisper-eden-villas.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Autumn Whisper Eden Villas</a></div>
           <div class="day-tags"><span class="tag tag-drive">↗ Kjøretid 2t 16m</span></div>
         </div>
       </div>
@@ -786,9 +946,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">04</span>
-      <span class="chapter-title">Furong</span>
+      <span class="chapter-title">Furong<span class="chapter-subtitle">Fúróng</span><span class="chapter-chinese">芙蓉</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Veduta_di_Furong_02.jpg?width=1200" alt="Furong" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">En av Kinas best bevarte eldgamle byer, bygget på pilarer over Youshui-elven. Fossefall renner rett gjennom sentrum og den gamle bymuren er intakt.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Smell Fish (Chouguyu) — gjæret fisk, en lokal Tujia-spesialitet med skarp smak som lokale sverger til</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -798,7 +963,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Furong</div>
-          <div class="day-hotel">Yongshun County — Furong Town Tusi Xuanfu Courtyard Waterfall Guesthouse</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/searchresults.html?ss=Furong+Town+Tusi+Xuanfu+Courtyard+Waterfall+Guesthouse" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Furong Town Tusi Xuanfu Courtyard Waterfall Guesthouse</a></div>
           <div class="day-tags"><span class="tag tag-drive">↗ Kjøretid 4t 42m</span></div>
         </div>
       </div>
@@ -809,9 +974,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">05</span>
-      <span class="chapter-title">Zhangjiajie</span>
+      <span class="chapter-title">Zhangjiajie<span class="chapter-subtitle">Zhāngjiājiè</span><span class="chapter-chinese">张家界</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=1200" alt="Zhangjiajie" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Inspirerte fjellene i Avatar-filmen. Kjent for dramatiske sandsteinssøyler, Bailong-elevatoren (verdens høyeste utendørsheis), glassgangene på Tianmen Mountain og Yuanjiajie-platået.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Tujia Three-Steamer Rice (三蒸) — ris dampet med svinekjøtt, fisk og grønnsaker, en eldgammel rett fra Tujia-folket</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -821,7 +991,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Zhangjiajie</div>
-          <div class="day-hotel">Country Retreats Manson Resort</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/manson-trip-com-group-country-retreats.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Country Retreats Manson Resort</a></div>
           <div class="day-tags">
             <span class="tag tag-drive">↗ Kjøretid 1t 25m</span>
             <span class="tag tag-tour">⊙ Tianmen Mountain</span>
@@ -837,7 +1007,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Zhangjiajie</div>
-          <div class="day-hotel">Country Retreats Manson Resort</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/manson-trip-com-group-country-retreats.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Country Retreats Manson Resort</a></div>
           <div class="day-tags"><span class="tag tag-tour">⊙ National Forest Park</span></div>
           <div class="day-activity">Bailong Elevator · Yuanjiajie Scenic Area · Tianzi Mountain — <a href="https://www.planchinatrip.com/cities/zhangjiajie/attractions/zhangjiajie-forest-park" target="_blank">planchinatrip.com</a></div>
         </div>
@@ -849,9 +1019,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">06</span>
-      <span class="chapter-title">Fenghuang</span>
+      <span class="chapter-title">Fenghuang<span class="chapter-subtitle">Fènghuáng</span><span class="chapter-chinese">凤凰</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_guilin_yangshuo_2017.jpg?width=1200" alt="Fenghuang" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">En av Kinas vakreste eldgamle byer, med Ming- og Qing-dynastiets arkitektur langs Tuojiang-elven, røde lykter og overhengende trebygninger speiler seg i vannet.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Ginger Candy (姜糖) — håndlaget ingefærkaramell som lages rett foran deg i butikkene langs elvebredden</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -861,7 +1036,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Fenghuang</div>
-          <div class="day-hotel">Phoenix Hall House Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/feng-huang-tang-she-jian-shan-jiu-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Phoenix Hall House Hotel</a></div>
           <div class="day-tags"><span class="tag tag-drive">↗ Kjøretid 2t 55m</span></div>
         </div>
       </div>
@@ -872,9 +1047,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">07</span>
-      <span class="chapter-title">Longji Rice Terraces</span>
+      <span class="chapter-title">Longji Rice Terraces<span class="chapter-subtitle">Lóngjǐ Tītián</span><span class="chapter-chinese">龙脊梯田</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Longji_terrace_-_03.JPG?width=1200" alt="Longji Rice Terraces" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Longji-rismarkene er blant verdens vakreste, hogd inn i fjellsidene av Zhuang- og Yao-folket for over 700 år siden. Dazhai-landsbyen er startpunkt for hiking til Pingan.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Bamboo Rice (竹筒饭) — klissete ris, kjøtt og krydder dampet inne i en bambusstokk over åpen ild</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -884,10 +1064,9 @@
         </div>
         <div class="day-body">
           <div class="day-place">Dazhai / Longji</div>
-          <div class="day-hotel">Longji Thousand Years Resort</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/shan-zhong-yi-qian-nian-guan-jing-min-su-long-ji-ti-tian-guan-jing-tai-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Longji Thousand Years Resort</a></div>
           <div class="day-tags">
             <span class="tag tag-drive">↗ Kjøretid 4t 40m</span>
-            <span class="tag tag-warn">⚠ Bestill inngang på forhånd</span>
           </div>
         </div>
       </div>
@@ -899,7 +1078,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Dazhai / Longji</div>
-          <div class="day-hotel">Longji Thousand Years Resort</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/shan-zhong-yi-qian-nian-guan-jing-min-su-long-ji-ti-tian-guan-jing-tai-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Longji Thousand Years Resort</a></div>
           <div class="day-activity">Mulig gåtur: Dazhai → Pingan</div>
         </div>
       </div>
@@ -910,9 +1089,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">08</span>
-      <span class="chapter-title">Guilin</span>
+      <span class="chapter-title">Guilin<span class="chapter-subtitle">Guìlín</span><span class="chapter-chinese">桂林</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_li_jiang_guilin_yangshuo_2011.jpg?width=1200" alt="Guilin" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Byregionen med verdens mest ikoniske karstlandskap. Li-elven mellom Guilin og Yangshuo er en av Kinas mest fotograferte strekninger. Elefantbergfjellet er byens landemerke.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Beer Fish (啤酒鱼) — fersk Li-elvefisk tilberedt i øl med chili og lokale krydder, en klassiker i Yangshuo</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -922,7 +1106,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Guilin</div>
-          <div class="day-hotel">Lijiang Moon View</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/guilin-this-old-place-intal-youth-hostel.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Lijiang Moon View</a></div>
           <div class="day-tags"><span class="tag tag-drive">↗ Kjøretid 2t 06m</span></div>
         </div>
       </div>
@@ -934,8 +1118,9 @@
         </div>
         <div class="day-body">
           <div class="day-place">Guilin</div>
-          <div class="day-hotel">Lijiang Moon View</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/guilin-this-old-place-intal-youth-hostel.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Lijiang Moon View</a></div>
           <div class="day-tags"><span class="tag tag-tour">⊙ Dagstur</span></div>
+          <div class="day-activity"><a href="https://www.viator.com/tours/Guilin/1-Day-Private-car-service-with-English-speaking-driver-and-guide/d323-443573P4" target="_blank" rel="noopener">1-dags privat tur med engelsk guide ↗</a></div>
         </div>
       </div>
     </div>
@@ -945,9 +1130,14 @@
   <div class="chapter">
     <div class="chapter-header">
       <span class="chapter-number">09</span>
-      <span class="chapter-title">Beijing</span>
+      <span class="chapter-title">Beijing<span class="chapter-subtitle">Běijīng</span><span class="chapter-chinese">北京</span></span>
     </div>
     <img class="chapter-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden_City,_Beijing.jpg?width=1200" alt="Beijing" loading="lazy">
+    <div class="place-info">
+      <p class="place-known-for">Kinas hovedstad og 3000-årige keiserby. Den forbudte by, Tiananmen-plassen, Sommerpalasset og Den store mur er blant verdens viktigste historiske steder.</p>
+      <p class="place-dish"><strong>Lokalt måltid:</strong> Peking Duck (北京烤鸭) — saktestekt and med sprøtt skinn, servert med pannekaker, vårløk og hoisin-saus</p>
+    </div>
+
     <div class="day-list">
       <div class="day-item">
         <div class="day-date">
@@ -957,7 +1147,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Beijing</div>
-          <div class="day-hotel">Legendale Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/bei-jing-li-jun-jiu-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Legendale Hotel</a></div>
           <div class="day-tags"><span class="tag tag-fly">✈ Guilin → Beijing</span></div>
           <div class="day-activity">12:00 → 14:55</div>
         </div>
@@ -970,7 +1160,7 @@
         </div>
         <div class="day-body">
           <div class="day-place">Beijing</div>
-          <div class="day-hotel">Legendale Hotel</div>
+          <div class="day-hotel">Overnatting: <a href="https://www.booking.com/hotel/cn/bei-jing-li-jun-jiu-dian.html" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">Legendale Hotel</a></div>
         </div>
       </div>
     </div>
@@ -1009,23 +1199,23 @@
   </div>
   <div class="hotels-grid" style="max-width:960px;margin:0 auto;">
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=SEYA+Panoramic+Hotel+Chongqing" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/iseyashi-ye-gao-kong-jiu-dian-jie-fang-bei-lai-fu-shi-dian.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/SkylineOfChongqing.jpg?width=600" alt="Chongqing">
       <div class="hotel-body">
         <div class="hotel-location">Chongqing · 8–10 jul</div>
         <div class="hotel-name">SEYA Panoramic Hotel</div>
         <div class="hotel-dates">3 netter</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Autumn+Whisper+Eden+Villas+Wulong" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/autumn-whisper-eden-villas.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600" alt="Wulong">
       <div class="hotel-body">
         <div class="hotel-location">Wulong · 11 jul</div>
         <div class="hotel-name">Autumn Whisper Eden Villas</div>
         <div class="hotel-dates">1 natt</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
@@ -1035,59 +1225,188 @@
         <div class="hotel-location">Furong · 12 jul</div>
         <div class="hotel-name">Tusi Xuanfu Courtyard Waterfall Guesthouse</div>
         <div class="hotel-dates">1 natt</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Country+Retreats+Zhangjiajie+Manson+Resort" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/manson-trip-com-group-country-retreats.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600" alt="Zhangjiajie">
       <div class="hotel-body">
         <div class="hotel-location">Zhangjiajie · 13–14 jul</div>
         <div class="hotel-name">Country Retreats Manson Resort</div>
         <div class="hotel-dates">2 netter</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Phoenix+Hall+House+Hotel+Fenghuang" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/feng-huang-tang-she-jian-shan-jiu-dian.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_guilin_yangshuo_2017.jpg?width=600" alt="Fenghuang">
       <div class="hotel-body">
         <div class="hotel-location">Fenghuang · 15 jul</div>
         <div class="hotel-name">Phoenix Hall House Hotel</div>
         <div class="hotel-dates">1 natt</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Longji+Thousand+Years+Resort+Dazhai" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/shan-zhong-yi-qian-nian-guan-jing-min-su-long-ji-ti-tian-guan-jing-tai-dian.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Longji_terrace_-_03.JPG?width=600" alt="Longji">
       <div class="hotel-body">
         <div class="hotel-location">Dazhai / Longji · 16–17 jul</div>
         <div class="hotel-name">Longji Thousand Years Resort</div>
         <div class="hotel-dates">2 netter</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Lijiang+Moon+View+Guilin" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/guilin-this-old-place-intal-youth-hostel.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/1_li_jiang_guilin_yangshuo_2011.jpg?width=600" alt="Guilin">
       <div class="hotel-body">
         <div class="hotel-location">Guilin · 18–19 jul</div>
         <div class="hotel-name">Lijiang Moon View</div>
         <div class="hotel-dates">2 netter</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
 
-    <a class="hotel-card" href="https://www.booking.com/search.html?ss=Legendale+Hotel+Beijing" target="_blank" rel="noopener">
+    <a class="hotel-card" href="https://www.booking.com/hotel/cn/bei-jing-li-jun-jiu-dian.html" target="_blank" rel="noopener">
       <img class="hotel-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden_City,_Beijing.jpg?width=600" alt="Beijing">
       <div class="hotel-body">
         <div class="hotel-location">Beijing · 20–22 jul</div>
         <div class="hotel-name">Legendale Hotel</div>
         <div class="hotel-dates">3 netter</div>
-        <div class="hotel-link-label">Søk på Booking.com ↗</div>
+        <div class="hotel-link-label">Se på Booking.com ↗</div>
       </div>
     </a>
+
+  </div>
+</section>
+
+
+<!-- KINESISK 101 -->
+<section class="chinese-section" id="kinesisk">
+  <div class="section-header" style="margin-bottom:3rem;">
+    <p class="section-eyebrow">Språk</p>
+    <h2 class="section-title">Kinesisk 101</h2>
+    <p class="section-subtitle">Nyttige fraser for reisen — på norsk, pinyin og kinesiske tegn</p>
+  </div>
+  <div class="phrase-grid" style="max-width:960px;margin:0 auto;">
+
+    <div class="phrase-card">
+      <div class="phrase-category">Hilsener</div>
+      <div class="phrase-norwegian">Hei / God dag</div>
+      <div class="phrase-pinyin">Nǐ hǎo</div>
+      <div class="phrase-chinese">你好</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Hilsener</div>
+      <div class="phrase-norwegian">Takk</div>
+      <div class="phrase-pinyin">Xièxiè</div>
+      <div class="phrase-chinese">谢谢</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Hilsener</div>
+      <div class="phrase-norwegian">Unnskyld / Beklager</div>
+      <div class="phrase-pinyin">Duìbuqǐ</div>
+      <div class="phrase-chinese">对不起</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Hilsener</div>
+      <div class="phrase-norwegian">Ja / Nei</div>
+      <div class="phrase-pinyin">Shì / Bù shì</div>
+      <div class="phrase-chinese">是 / 不是</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Praktisk</div>
+      <div class="phrase-norwegian">Hvor mye koster dette?</div>
+      <div class="phrase-pinyin">Zhège duōshǎo qián?</div>
+      <div class="phrase-chinese">这个多少钱？</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Praktisk</div>
+      <div class="phrase-norwegian">For dyrt!</div>
+      <div class="phrase-pinyin">Tài guì le!</div>
+      <div class="phrase-chinese">太贵了！</div>
+      <div class="phrase-tip">Nyttig på markedet — prisforhandling er forventet</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Praktisk</div>
+      <div class="phrase-norwegian">Regningen, takk</div>
+      <div class="phrase-pinyin">Mǎidān</div>
+      <div class="phrase-chinese">买单</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Praktisk</div>
+      <div class="phrase-norwegian">Jeg forstår ikke</div>
+      <div class="phrase-pinyin">Wǒ tīng bù dǒng</div>
+      <div class="phrase-chinese">我听不懂</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Mat</div>
+      <div class="phrase-norwegian">Ingen koriander!</div>
+      <div class="phrase-pinyin">Bù yào xiāngcài!</div>
+      <div class="phrase-chinese">不要香菜！</div>
+      <div class="phrase-tip">Koriander er standard i mange retter — viktig å kunne si fra</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Mat</div>
+      <div class="phrase-norwegian">Ikke for sterkt, takk</div>
+      <div class="phrase-pinyin">Bù yào tài là, xièxiè</div>
+      <div class="phrase-chinese">不要太辣，谢谢</div>
+      <div class="phrase-tip">Særlig relevant i Chongqing og Hunan-provinsen</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Mat</div>
+      <div class="phrase-norwegian">Det var veldig godt!</div>
+      <div class="phrase-pinyin">Zhè ge hǎo chī!</div>
+      <div class="phrase-chinese">这个好吃！</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Mat</div>
+      <div class="phrase-norwegian">Vann, takk</div>
+      <div class="phrase-pinyin">Shuǐ, xièxiè</div>
+      <div class="phrase-chinese">水，谢谢</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Transport</div>
+      <div class="phrase-norwegian">Hvor er toalettet?</div>
+      <div class="phrase-pinyin">Xǐshǒujiān zài nǎlǐ?</div>
+      <div class="phrase-chinese">洗手间在哪里？</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Transport</div>
+      <div class="phrase-norwegian">Ring en drosje for meg</div>
+      <div class="phrase-pinyin">Bāng wǒ jiào chūzūchē</div>
+      <div class="phrase-chinese">帮我叫出租车</div>
+      <div class="phrase-tip">DiDi-appen er enklere — vis hotelladressen på skjermen</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Nødsituasjon</div>
+      <div class="phrase-norwegian">Jeg trenger hjelp</div>
+      <div class="phrase-pinyin">Wǒ xūyào bāngzhù</div>
+      <div class="phrase-chinese">我需要帮助</div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-category">Nødsituasjon</div>
+      <div class="phrase-norwegian">Tilkall en lege</div>
+      <div class="phrase-pinyin">Qǐng jiào yīshēng</div>
+      <div class="phrase-chinese">请叫医生</div>
+    </div>
 
   </div>
 </section>
@@ -1101,6 +1420,55 @@
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 80);
   });
+
+  // Trip status
+  (function() {
+    const schedule = [
+      { place: 'Oslo',         start: '2026-07-07', end: '2026-07-07' },
+      { place: 'Chongqing',    start: '2026-07-08', end: '2026-07-10' },
+      { place: 'Wulong',       start: '2026-07-11', end: '2026-07-11' },
+      { place: 'Furong',       start: '2026-07-12', end: '2026-07-12' },
+      { place: 'Zhangjiajie',  start: '2026-07-13', end: '2026-07-14' },
+      { place: 'Fenghuang',    start: '2026-07-15', end: '2026-07-15' },
+      { place: 'Dazhai / Longji', start: '2026-07-16', end: '2026-07-17' },
+      { place: 'Guilin',       start: '2026-07-18', end: '2026-07-19' },
+      { place: 'Beijing',      start: '2026-07-20', end: '2026-07-22' },
+    ];
+
+    const tripStart = new Date('2026-07-07');
+    const tripEnd   = new Date('2026-07-23');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const dot  = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+
+    function dayDiff(a, b) {
+      return Math.round((b - a) / (1000 * 60 * 60 * 24));
+    }
+
+    if (today < tripStart) {
+      const days = dayDiff(today, tripStart);
+      dot.className = 'hero-status-dot before';
+      text.textContent = days === 1
+        ? 'Dagens status: 1 dag til reisen starter'
+        : `Dagens status: ${days} dager til reisen starter`;
+    } else if (today > tripEnd) {
+      const days = dayDiff(tripEnd, today);
+      dot.className = 'hero-status-dot after';
+      text.textContent = days === 1
+        ? 'Dagens status: 1 dag siden reisen ble avsluttet'
+        : `Dagens status: ${days} dager siden reisen ble avsluttet`;
+    } else {
+      const todayStr = today.toISOString().slice(0, 10);
+      const current = schedule.find(s => todayStr >= s.start && todayStr <= s.end);
+      dot.className = 'hero-status-dot during';
+      text.textContent = current
+        ? `Dagens status: ${current.place}`
+        : 'Dagens status: På reise';
+    }
+  })();
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1113,7 +1481,7 @@
       date: '8 jul + 20–22 jul',
       hotel: 'Legendale Hotel',
       activity: 'Ankomst fra Oslo · Avreise til Chongqing · Avsluttende dager',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden_City,_Beijing.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Forbidden_City,_Beijing.jpg?width=600'
     },
     {
       name: 'Chongqing',
@@ -1122,7 +1490,7 @@
       date: '8–10 jul',
       hotel: 'SEYA Panoramic Hotel',
       activity: 'Guidet tur (9/7)',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/SkylineOfChongqing.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/SkylineOfChongqing.jpg?width=600'
     },
     {
       name: 'Wulong',
@@ -1131,7 +1499,7 @@
       date: '11 jul',
       hotel: 'Autumn Whisper Eden Villas',
       activity: 'Kjøretid fra Chongqing: 2t 16m',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/1_li_jiang_guilin_yangshuo_2011.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600'
     },
     {
       name: 'Furong',
@@ -1140,7 +1508,7 @@
       date: '12 jul',
       hotel: 'Furong Town Tusi Xuanfu Courtyard Waterfall Guesthouse',
       activity: 'Kjøretid fra Wulong: 4t 42m',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/1_guilin_yangshuo_2017.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Veduta_di_Furong_02.jpg?width=600'
     },
     {
       name: 'Zhangjiajie',
@@ -1149,7 +1517,7 @@
       date: '13–14 jul',
       hotel: 'Country Retreats Manson Resort',
       activity: 'Tianmen Mountain (13/7) · National Forest Park (14/7)',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600'
     },
     {
       name: 'Fenghuang',
@@ -1158,7 +1526,7 @@
       date: '15 jul',
       hotel: 'Phoenix Hall House Hotel',
       activity: 'Kjøretid fra Zhangjiajie: 2t 55m',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/1_guilin_yangshuo_2017.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/1_guilin_yangshuo_2017.jpg?width=600'
     },
     {
       name: 'Dazhai / Longji',
@@ -1167,7 +1535,7 @@
       date: '16–17 jul',
       hotel: 'Longji Thousand Years Resort',
       activity: 'Kjøretid fra Fenghuang: 4t 40m · Mulig gåtur Dazhai→Pingan',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/Longji_terrace_-_03.JPG?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Longji_terrace_-_03.JPG?width=600'
     },
     {
       name: 'Guilin',
@@ -1176,7 +1544,7 @@
       date: '18–19 jul',
       hotel: 'Lijiang Moon View',
       activity: 'Dagstur (19/7)',
-      img: 'https://https://commons.wikimedia.org/wiki/Special:FilePath/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?width=600'
+      img: 'https://commons.wikimedia.org/wiki/Special:FilePath/1_li_jiang_guilin_yangshuo_2011.jpg?width=600'
     }
   ];
 
@@ -1249,12 +1617,27 @@
     const fontSize = isMain ? '13px' : '11.5px';
     const fontWeight = isMain ? '500' : '400';
 
+    const bookingUrls = {
+      'Beijing':         'https://www.booking.com/hotel/cn/bei-jing-li-jun-jiu-dian.html',
+      'Chongqing':       'https://www.booking.com/hotel/cn/iseyashi-ye-gao-kong-jiu-dian-jie-fang-bei-lai-fu-shi-dian.html',
+      'Wulong':          'https://www.booking.com/hotel/cn/autumn-whisper-eden-villas.html',
+      'Furong':          'https://www.booking.com/searchresults.html?ss=Furong+Town+Tusi+Xuanfu+Courtyard+Waterfall+Guesthouse',
+      'Zhangjiajie':     'https://www.booking.com/hotel/cn/manson-trip-com-group-country-retreats.html',
+      'Fenghuang':       'https://www.booking.com/hotel/cn/feng-huang-tang-she-jian-shan-jiu-dian.html',
+      'Dazhai / Longji': 'https://www.booking.com/hotel/cn/shan-zhong-yi-qian-nian-guan-jing-min-su-long-ji-ti-tian-guan-jing-tai-dian.html',
+      'Guilin':          'https://www.booking.com/hotel/cn/guilin-this-old-place-intal-youth-hostel.html',
+    };
+    const hotelUrl = bookingUrls[stop.name];
+    const hotelHtml = hotelUrl
+      ? `<div class="popup-hotel"><a href="${hotelUrl}" target="_blank" rel="noopener" style="color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px;">${stop.hotel}</a></div>`
+      : `<div class="popup-hotel">${stop.hotel}</div>`;
+
     const popupContent = `
       <img class="popup-img" src="${stop.img}" alt="${stop.name}" onerror="this.style.display='none'">
       <div class="popup-inner">
         <div class="popup-date">${stop.date}</div>
         <div class="popup-place">${stop.name}</div>
-        <div class="popup-hotel">${stop.hotel}</div>
+        ${hotelHtml}
         <div class="popup-activity">${stop.activity}</div>
       </div>
     `;
