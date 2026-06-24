@@ -547,62 +547,8 @@
     nav.scrolled .nav-links a { color: var(--ink-muted); }
     .nav-links a:hover { color: var(--accent) !important; }
 
-    /* ── HAMBURGER MENU ── */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #f0ece4;
-      transition: background 0.3s;
-      border-radius: 2px;
-    }
-    nav.scrolled .nav-hamburger span { background: var(--ink); }
-
-    .nav-mobile {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(245,241,235,0.97);
-      backdrop-filter: blur(12px);
-      z-index: 99;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .nav-mobile.open { display: flex; }
-    .nav-mobile a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-    }
-    .nav-mobile a:hover { color: var(--accent); }
-    .nav-mobile-close {
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: var(--ink-muted);
-      line-height: 1;
-    }
-
     @media (max-width: 600px) {
       .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
       .day-item { grid-template-columns: 72px 1fr; }
       .hero-route { gap: 0; row-gap: 0.4rem; }
       #map { height: 340px; }

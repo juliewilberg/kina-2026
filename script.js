@@ -3,15 +3,6 @@
     nav.classList.toggle('scrolled', window.scrollY > 80);
   });
 
-  // Mobile hamburger menu
-  const hamburger = document.getElementById('nav-hamburger');
-  const mobileNav = document.getElementById('nav-mobile');
-  const mobileClose = document.getElementById('nav-mobile-close');
-  hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
-  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileNav.classList.remove('open'));
-  });
 
   // Trip status
   (function() {
