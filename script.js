@@ -3,6 +3,16 @@
     nav.classList.toggle('scrolled', window.scrollY > 80);
   });
 
+  // Mobile hamburger menu
+  const hamburger = document.getElementById('nav-hamburger');
+  const mobileNav = document.getElementById('nav-mobile');
+  const mobileClose = document.getElementById('nav-mobile-close');
+  hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileNav.classList.remove('open'));
+  });
+
   // Trip status
   (function() {
     const schedule = [
@@ -142,9 +152,10 @@
     { from: [39.9042, 116.4074], to: [59.9139, 10.7522] }
   ];
 
+  const isMobile = window.innerWidth <= 600;
   const map = L.map('map', {
-    center: [29, 110],
-    zoom: 6,
+    center: isMobile ? [28, 112] : [29, 110],
+    zoom: isMobile ? 4 : 6,
     zoomControl: true,
     scrollWheelZoom: true
   });
