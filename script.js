@@ -151,19 +151,23 @@
     scrollWheelZoom: true
   });
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © <a href="https://www.esri.com/">Esri</a> — Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+    maxZoom: 18
+  }).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18
   }).addTo(map);
 
   // Flight routes (straight dashed lines)
   flightRoutes.forEach(route => {
+    // Light casing underneath so the dashes stand out against satellite imagery
+    L.polyline([route.from, route.to], { color: '#ffffff', weight: 5, opacity: 0.5 }).addTo(map);
     L.polyline([route.from, route.to], {
-      color: '#c4651a',
-      weight: 1.8,
-      dashArray: '6, 5',
-      opacity: 0.55
+      color: '#ff8a1f',
+      weight: 2.5,
+      dashArray: '8, 6',
+      opacity: 1
     }).addTo(map);
   });
 
@@ -175,16 +179,18 @@
       const data = await res.json();
       if (data.code === 'Ok') {
         const coords = data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]);
-        L.polyline(coords, {
-          color: '#5a6e5e',
-          weight: 3,
-          opacity: 0.85
-        }).addTo(map);
+        drawDrivingLine(coords);
       }
     } catch (e) {
       // Fallback: straight line if routing fails
-      L.polyline([from, to], { color: '#5a6e5e', weight: 2.5, opacity: 0.7 }).addTo(map);
+      drawDrivingLine([from, to]);
     }
+  }
+
+  // Bright line with a dark casing so it stays visible on satellite imagery
+  function drawDrivingLine(coords) {
+    L.polyline(coords, { color: '#1a1a1a', weight: 7, opacity: 0.55 }).addTo(map);
+    L.polyline(coords, { color: '#ffd84a', weight: 3.5, opacity: 1 }).addTo(map);
   }
 
   drivingLegs.forEach(leg => fetchAndDrawRoute(leg.from, leg.to));
